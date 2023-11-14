@@ -104,41 +104,67 @@
 				<script type="text/javascript" pointColor="0, 0, 255" color="255, 0, 0" opacity='0.5' zIndex="-2" count="200" src="https://cdn.bootcss.com/canvas-nest.js/1.0.1/canvas-nest.min.js"></script>
 				<script type="text/javascript" pointColor="0, 0, 255" color="255, 0, 0" opacity='0.5' zIndex="-2" count="200" src="dist/canvas-nest.js"></script>
 				<script type="text/javascript" pointColor="0, 0, 255" color="255, 0, 0" opacity='0.5' zIndex="-2" count="200" src="dist/canvas-nest.js"></script>
-				<canvas class="matrix"></canvas>
-    <script>
-        var matrix = document.querySelector(".matrix");
-        var context = matrix.getContext("2d");
-        var aa=["0","1"];
-        matrix.width = innerWidth;
-        matrix.height = innerHeight;
-        var drop=[],
-            font_size = 16,
-            columns = matrix.width/font_size;
-        for(var i=0;i<columns;i++){
-            drop[i] = 1;
-//            console.log(drop[i]);
-        }
-        function rain(){
-            context.fillStyle = "rgba(255,255,255,0.05)";
-            context.fillRect(0,0,matrix.width,matrix.height);
-            context.fillStyle = "#27ff00";
-            context.font = font_size+"px";
-            for(var i=0;i<columns;i++){
-                context.fillText(aa[Math.floor(Math.random()*7)],i*font_size,drop[i]*font_size);
-//                console.log(drop[i]);
-                if(drop[i]*font_size>(matrix.height*2/3)&&Math.random()>0.85){
-                    drop[i] = 0;
-                }      
-                    drop[i]++;
-                
-                
-            }
-        }
-        setInterval(function(){
-            rain();
-        },50)
-        console.log(4&&0);
-    </script>
+				<canvas id="code_rain_canvas" width="1440" height="900"></canvas>
+  <script>
+    window.onload = function() {
+         //获取画布对象
+         var canvas = document.getElementById("code_rain_canvas");
+         //获取画布的上下文
+         var context = canvas.getContext("2d");
+         var s = window.screen;
+         var W = canvas.width = s.width;
+         var H = canvas.height;
+         //获取浏览器屏幕的宽度和高度
+         //var W = window.innerWidth;
+         //var H = window.innerHeight;
+         //设置canvas的宽度和高度
+         canvas.width = W;
+         canvas.height = H;
+         //每个文字的字体大小
+         var fontSize = 12;
+         //计算列
+         var colunms = Math.floor(W / fontSize);
+         //记录每列文字的y轴坐标
+         var drops = [];
+         //给每一个文字初始化一个起始点的位置
+         for (var i = 0; i < colunms; i++) {
+             drops.push(0);
+         }
+         //运动的文字
+         var str = "猪猪菲";
+         //4:fillText(str,x,y);原理就是去更改y的坐标位置
+         //绘画的函数
+         function draw() {
+             context.fillStyle = "rgba(238,238,238,.08)"; //遮盖层
+             context.fillRect(0, 0, W, H);
+             //给字体设置样式
+             context.font = "600 " + fontSize + "px  Georgia";
+             //给字体添加颜色
+             context.fillStyle = ["#33B5E5", "#0099CC", "#AA66CC", "#9933CC", "#99CC00", "#669900", "#FFBB33", "#FF8800", "#FF4444", "#CC0000"][parseInt(Math.random() * 10)]; //randColor();可以rgb,hsl, 标准色，十六进制颜色
+             //写入画布中
+             for (var i = 0; i < colunms; i++) {
+                 var index = Math.floor(Math.random() * str.length);
+                 var x = i * fontSize;
+                 var y = drops[i] * fontSize;
+                 context.fillText(str[index], x, y);
+                 //如果要改变时间，肯定就是改变每次他的起点
+                 if (y >= canvas.height && Math.random() > 0.99) {
+                     drops[i] = 0;
+                 }
+                 drops[i]++;
+             }
+         };
+ 
+         function randColor() { //随机颜色
+             var r = Math.floor(Math.random() * 256);
+             var g = Math.floor(Math.random() * 256);
+             var b = Math.floor(Math.random() * 256);
+             return "rgb(" + r + "," + g + "," + b + ")";
+         }
+         draw();
+         setInterval(draw, 35);
+     };
+  </script>
 				
 				<div id="page" class="site">
 					<header id="masthead" class="site-header" role="banner">
