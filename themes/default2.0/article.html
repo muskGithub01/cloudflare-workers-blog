@@ -88,11 +88,34 @@
 				<link rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/10.3.2/styles/tomorrow-night-bright.min.css">
 				<script src='https://cdn.staticfile.org/highlight.js/10.3.2/highlight.min.js'></script>
 				{{ &OPT.codeBeforHead }}
+				 <title>深海ChTi黑客代码雨背景</title>
+   				 <style>body{ margin: 0; overflow: hidden;} </style>
 			</head>
 			<body class="home blog logged-in custom-font-enabled single-author hfeed">
 				<script type="text/javascript" pointColor="0, 0, 255" color="255, 0, 0" opacity='0.5' zIndex="-1" count="200" src="https://cdn.bootcss.com/canvas-nest.js/1.0.1/canvas-nest.min.js"></script>
 				<script type="text/javascript" pointColor="0, 0, 255" color="255, 0, 0" opacity='0.5' zIndex="-1" count="200" src="dist/canvas-nest.js"></script>
 				<script type="text/javascript" pointColor="0, 0, 255" color="255, 0, 0" opacity='0.5' zIndex="-1" count="200" src="dist/canvas-nest.js"></script>
+				<canvas id="myCanvas"></canvas>
+<script>
+    const width = document.getElementById("myCanvas").width = screen.availWidth;
+    const height = document.getElementById("myCanvas").height = screen.availHeight;
+    const ctx = document.getElementById("myCanvas").getContext("2d");
+    const arr = Array(Math.ceil(width / 10)).fill(0);
+    const str = "深海".split("");
+
+function rain() {
+    ctx.fillStyle = "rgba(0,0,0,0.05)";
+    ctx.fillRect(0, 0, width, height);
+    ctx.fillStyle = "#0f0";
+    arr.forEach(function (value, index) {
+        ctx.fillText(str[Math.floor(Math.random() * str.length)], index * 10, value + 10);
+        arr[index] = value >= height || value > 8888 * Math.random() ? 0 : value + 10;
+    });
+}
+
+setInterval(rain, 30);
+</script>
+				
 				<div id="page" class="site">
 					<header id="masthead" class="site-header" role="banner">
 						<div class="io-title-description">
