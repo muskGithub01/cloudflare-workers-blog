@@ -95,41 +95,70 @@
 				<script type="text/javascript" pointColor="0, 0, 255" color="255, 0, 0" opacity='0.5' zIndex="-2" count="200" src="https://cdn.bootcss.com/canvas-nest.js/1.0.1/canvas-nest.min.js"></script>
 				<script type="text/javascript" pointColor="0, 0, 255" color="255, 0, 0" opacity='0.5' zIndex="-2" count="200" src="dist/canvas-nest.js"></script>
 				<script type="text/javascript" pointColor="0, 0, 255" color="255, 0, 0" opacity='0.5' zIndex="-2" count="200" src="dist/canvas-nest.js"></script>
-				<canvas class="matrix"></canvas>
-    <script>
-        var matrix = document.querySelector(".matrix");
-        var context = matrix.getContext("2d");
-        var aa=["a","b","c","d","e","f","g"];
-        matrix.width = innerWidth;
-        matrix.height = innerHeight;
-        var drop=[],
-            font_size = 1,
-            columns = matrix.width/font_size;
-        for(var i=0;i<columns;i++){
-            drop[i] = 1;
-//            console.log(drop[i]);
-        }
-        function rain(){
-            context.fillStyle = "rgba(0,0,0,0.05)";
-            context.fillRect(0,0,matrix.width,matrix.height);
-            context.fillStyle = "#27ff00";
-            context.font = font_size+"px";
-            for(var i=0;i<columns;i++){
-                context.fillText(aa[Math.floor(Math.random()*7)],i*font_size,drop[i]*font_size);
-//                console.log(drop[i]);
-                if(drop[i]*font_size>(matrix.height*2/3)&&Math.random()>0.85){
-                    drop[i] = 0;
-                }      
-                    drop[i]++;
-                
-                
-            }
-        }
-        setInterval(function(){
-            rain();
-        },50)
-        console.log(4&&0);
-    </script>
+				<canvas id="canvas" ></canvas>
+
+
+	<script type="text/javascript">
+		//获取标签
+		var canV = document.getElementById('canvas');
+		var ctx = canV.getContext("2d");//画布
+		var viewWidth,viewHeight;
+
+
+
+		function fuck() {
+			viewWidth = canV.width = window.innerWidth;//视口宽度
+			viewHeight = canV.height = window.innerHeight;//视口高度
+		}
+		fuck();//执行函数
+		window.onresize = fuck;//视口发生变化
+
+
+
+		// 准备26字母
+		var text = "QWERTYUIOPASDFGHJKLZXCVBNM";
+		var size = 24;//字母所占面积
+		var num = Math.floor(viewWidth/size);//一行多少个代码
+		var arr = [];
+		for( var i = 0;i<num;i++) {//x坐标 i*size  arr[i]*size
+			arr.push(0);
+		}
+
+
+
+		function draw() {//造字母
+			ctx.fillStyle = 'rgba(0,0,0,.1)';//刷黑
+			ctx.fillRect(0,0,viewWidth,viewHeight);
+			ctx.fillStyle = 'blue';
+			ctx.font = "20px arial"
+			for(var i = 0;i<num;i++) {
+				var ox = i*size;
+				var oy = arr[i]*size;
+				var random = Math.floor(Math.random()*text.length);
+
+				ctx.fillText(text[random],ox,oy);
+				if(oy>viewHeight && Math.random()>0.98){
+					arr[i] = 0;
+
+				}
+				arr[i]++
+			}
+		}
+		setInterval(draw, 50)
+		draw();
+
+
+
+		// 三角形
+		// ctx.moveTo(100, 100)
+		// ctx.lineTo(400, 400)
+		// ctx.lineTo(400, 100)
+		// ctx.lineTo(100, 100)
+		// ctx.fillStyle = 'pink'
+		// ctx.fill()
+
+
+	</script>
 				<div id="page" class="site">
 					<header id="masthead" class="site-header" role="banner">
 						<div class="io-title-description">
