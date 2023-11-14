@@ -97,9 +97,7 @@
         body {
 	    overflow: hidden;		
         }
-	#bg{
-      width: 100%;
-      height: 100%; }
+	
     </style>
 			</head>
 	
@@ -113,7 +111,7 @@
         var context = matrix.getContext("2d");
         var aa=["a","x","s","d","w","e","f"];
         matrix.width = innerWidth;
-        matrix.height = 2*innerHeight;
+        matrix.height = innerHeight/2;
         var drop=[],
             font_size = 16,
             columns = matrix.width/font_size;
