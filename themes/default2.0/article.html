@@ -95,13 +95,11 @@
         }
         
         body {
-	    overflow: hidden;
-          
-		
+	    overflow: hidden;		
         }
 	#bg{
       width: 100%;
-      height: 400%; }
+      height: 100%; }
     </style>
 			</head>
 	
@@ -109,7 +107,7 @@
 				<script type="text/javascript" pointColor="0, 0, 255" color="255, 0, 0" opacity='0.5' zIndex="-2" count="200" src="https://cdn.bootcss.com/canvas-nest.js/1.0.1/canvas-nest.min.js"></script>
 				<script type="text/javascript" pointColor="0, 0, 255" color="255, 0, 0" opacity='0.5' zIndex="-2" count="200" src="dist/canvas-nest.js"></script>
 				<script type="text/javascript" pointColor="0, 0, 255" color="255, 0, 0" opacity='0.5' zIndex="-2" count="200" src="dist/canvas-nest.js"></script>
-							<canvas class="matrix"></canvas>
+				<canvas class="matrix"></canvas>
     <script>
         var matrix = document.querySelector(".matrix");
         var context = matrix.getContext("2d");
@@ -117,7 +115,7 @@
         matrix.width = innerWidth;
         matrix.height = innerHeight;
         var drop=[],
-            font_size = 32,
+            font_size = 16,
             columns = matrix.width/font_size;
         for(var i=0;i<columns;i++){
             drop[i] = 1;
