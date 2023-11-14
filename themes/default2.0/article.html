@@ -131,7 +131,7 @@
             for(var i=0;i<columns;i++){
                 context.fillText(aa[Math.floor(Math.random()*7)],i*font_size,drop[i]*font_size);
 //                console.log(drop[i]);
-                if(drop[i]*font_size>(matrix.height*2)&&Math.random()>0.85){
+                if(drop[i]*font_size>(matrix.height*2)*2&&Math.random()>0.85){
                     drop[i] = 0;
                 }      
                     drop[i]++;
