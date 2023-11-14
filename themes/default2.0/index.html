@@ -16,7 +16,6 @@
 				<!-- <link rel="icon" type="image/x-icon" href="https://cdn.jsdelivr.net/gh/gdtool/zhaopp/cfblog/favicon.ico" />-->
 				<!-- <link rel="Shortcut Icon" href="https://cdn.jsdelivr.net/gh/gdtool/zhaopp/cfblog/favicon.ico">-->
 				<title>{{ &title }}</title>
-				<title>Document</title>
 				<meta name="keywords" content="{{ &keyWords }}" />
 				<meta name="description" content="{{ &OPT.siteDescription }}" />
 				<link rel="dns-prefetch" href="//fonts.googleapis.com" />
@@ -95,39 +94,6 @@
 				<script type="text/javascript" pointColor="0, 0, 255" color="255, 0, 0" opacity='0.5' zIndex="-1" count="200" src="https://cdn.bootcss.com/canvas-nest.js/1.0.1/canvas-nest.min.js"></script>
 				<script type="text/javascript" pointColor="0, 0, 255" color="255, 0, 0" opacity='0.5' zIndex="-1" count="200" src="dist/canvas-nest.js"></script>
 				<script type="text/javascript" pointColor="0, 0, 255" color="255, 0, 0" opacity='0.5' zIndex="-1" count="200" src="dist/canvas-nest.js"></script>
-				</script> 
-	window.onload = function() {
-  var width,height,
-  canvas = document.getElementById("canvas");
-  canvas.width = width = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
-  canvas.height = height = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
-  var ctx = canvas.getContext('2d');
-  var num = Math.ceil(width / 10);
-  var y = Array(num).join(0).split('');
-  var draw = function() {
-        ctx.fillStyle = 'rgba(0,0,0,.05)'; //核心代码，创建黑色背景，透明度为0.05的填充色。
-        ctx.fillRect(0, 0, width, height);
-        ctx.fillStyle = '#0f0'; //设置了字体颜色为绿色
-        ctx.font = '10px Microsoft YaHei';//设置字体大小与family
-        for(i = 0; i < num; i++) {
-            var x = (i * 10) + 10;
-            text = String.fromCharCode(65 + Math.random() * 62);
-            var y1 = y[i];
-            ctx.fillText(text, x, y1);
-            if(y1 > Math.random() * 10 * height) {
-                y[i] = 0;
-            } else {
-                y[i] = parseInt(y[i]) + 10;
-            }
-        }
-    }
-
-    ;(function(){
-        setInterval(draw, 100);
-    })();
-
-}
-</script>
 				<div id="page" class="site">
 					<header id="masthead" class="site-header" role="banner">
 						<div class="io-title-description">
