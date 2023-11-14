@@ -95,7 +95,7 @@
         }
         
         body {
-		
+	    overflow: hidden;
             background-color: #000;
 		
         }
@@ -124,7 +124,7 @@
 //            console.log(drop[i]);
         }
         function rain(){
-            context.fillStyle = "rgba(0, 0, 0,0.05)";
+            context.fillStyle = "rgba(255, 255, 255,0.05)";
             context.fillRect(0,0,matrix.width,matrix.height);
             context.fillStyle = "#27ff00";
             context.font = font_size+"px";
