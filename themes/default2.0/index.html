@@ -108,11 +108,11 @@
     <script>
         var matrix = document.querySelector(".matrix");
         var context = matrix.getContext("2d");
-        var aa=["a","x","s","d","w","e","f"];
+        var aa=["0","1","a","d","w","e","f","s","z","x","c","v","b","n"];
         matrix.width = innerWidth;
         matrix.height = innerHeight;
         var drop=[],
-            font_size = 30,
+            font_size = 16,
             columns = matrix.width/font_size;
         for(var i=0;i<columns;i++){
             drop[i] = 1;
