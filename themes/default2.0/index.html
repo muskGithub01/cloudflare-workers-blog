@@ -104,13 +104,15 @@
     const ctx = document.getElementById("myCanvas").getContext("2d");
     const arr = Array(Math.ceil(width)).fill(0);
     const str = "0123456789".split("");
-    var fontSize = 64;
+    
 
 function rain() {
+    const fz =32; // 字体大小
+    ctx.fillStyle = randomColor(); // 设置字体颜色
+    ctx.fontSize = fz + 'px'; 
     ctx.fillStyle = "rgba(255,255,255,0.05)";
     ctx.fillRect(0, 0, width, height);
     ctx.fillStyle = "#0f0";
-    ctx.font = fontSize +"px";
     arr.forEach(function (value, index) {
         ctx.fillText(str[Math.floor(Math.random() * str.length)], index * 10, value + 10);
         arr[index] = value >= height || value > 8888 * Math.random() ? 0 : value + 10;
