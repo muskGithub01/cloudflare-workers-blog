@@ -87,39 +87,14 @@
 				<style type="text/css" id="wp-custom-css">@media (max-width: 768px) { #secondary { display:none !important; } #menu-top{ display:none !important; } .site-content { float: left; width: 92%; padding: 30px 2% 0 1%; } .site-description{ display:none !important; } .io-title-description { display: inline-block; margin: 17px 0; padding: 0px 0; float: none; } .wrapper { border: 1px solid #16a1e7 !important; } }</style>
 				<link rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/10.3.2/styles/tomorrow-night-bright.min.css">
 				<script src='https://cdn.staticfile.org/highlight.js/10.3.2/highlight.min.js'></script>
-				{{ &OPT.codeBeforHead }}
-
-				
-    </style>
+				{{ &OPT.codeBeforHead }}				
+    				</style>
 			</head>
 			
 			<body class="home blog logged-in custom-font-enabled single-author hfeed">
 				<script type="text/javascript" pointColor="0, 0, 255" color="255, 0, 0" opacity='0.5' zIndex="-2" count="200" src="https://cdn.bootcss.com/canvas-nest.js/1.0.1/canvas-nest.min.js"></script>
 				<script type="text/javascript" pointColor="0, 0, 255" color="255, 0, 0" opacity='0.5' zIndex="-2" count="200" src="dist/canvas-nest.js"></script>
 				<script type="text/javascript" pointColor="0, 0, 255" color="255, 0, 0" opacity='0.5' zIndex="-2" count="200" src="dist/canvas-nest.js"></script>
-<canvas id="myCanvas"></canvas>
-<script>
-    const width = document.getElementById("myCanvas").width = screen.availWidth;
-    const height = document.getElementById("myCanvas").height = screen.availHeight;
-    const ctx = document.getElementById("myCanvas").getContext("2d");
-    const arr = Array(Math.ceil(width)).fill(0);
-    const str = "0123456789".split("");
-     const fz =32; // 字体大小
-
-function rain() {
-   
-    ctx.fontSize = fz + 'px'; 
-    ctx.fillStyle = "rgba(255,255,255,0.05)";
-    ctx.fillRect(0, 0, width, height);
-    ctx.fillStyle = "#0f0";
-    arr.forEach(function (value, index) {
-        ctx.fillText(str[Math.floor(Math.random() * str.length)], index * 10, value + 10);
-        arr[index] = value >= height || value > 8888 * Math.random() ? 0 : value + 10;
-    });
-}
-
-setInterval(rain, 30);
-</script>
 				<div id="page" class="site">
 					<header id="masthead" class="site-header" role="banner">
 						<div class="io-title-description">
