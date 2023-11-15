@@ -104,10 +104,10 @@
     const ctx = document.getElementById("myCanvas").getContext("2d");
     const arr = Array(Math.ceil(width)).fill(0);
     const str = "0123456789".split("");
-    
+     const fz =32; // 字体大小
 
 function rain() {
-    const fz =32; // 字体大小
+   
     ctx.fontSize = fz + 'px'; 
     ctx.fillStyle = "rgba(255,255,255,0.05)";
     ctx.fillRect(0, 0, width, height);
