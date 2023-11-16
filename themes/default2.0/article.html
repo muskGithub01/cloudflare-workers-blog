@@ -280,10 +280,10 @@
         animate()
     </script>
 					
-				<canvas class="matrix" style="position: relative; z-index: -2;"></canvas>
+<canvas class="matrix" style="position: relative; z-index: -2;"></canvas>
     <script>
         var matrix = document.querySelector(".matrix");
-        var context = matrix.getContext("2d");
+        var context1 = matrix.getContext("2d");
         var aa=["a","x","s","d","w","e","f"];
      matrix.width = innerWidth;
 matrix.height = innerHeight;
@@ -298,9 +298,9 @@ for (var i = 0; i < columns; i++) {
 }
 
 function rain() {
-    context.fillStyle = "rgba(255,255,255,1)";
-    context.fillRect(0, 0, matrix.width, matrix.height);
-    context.font = font_size + "px";
+    context1.fillStyle = "rgba(255,255,255,1)";
+    context1.fillRect(0, 0, matrix.width, matrix.height);
+    context1.font = font_size + "px";
 
     for (var i = 0; i < columns; i++) {
         for (var j = 0; j < matrixPosition[i]; j++) {
@@ -309,8 +309,8 @@ function rain() {
             }
 
             var randomLetter = matrixText[i][j];
-            context.fillStyle = getRandomColor();
-            context.fillText(randomLetter, i * font_size, (matrixPosition[i] - j) * font_size);
+            context1.fillStyle = getRandomColor();
+            context1.fillText(randomLetter, i * font_size, (matrixPosition[i] - j) * font_size);
         }
 
         if (matrixPosition[i] * font_size > (matrix.height * 5 / 6) && Math.random() > 0.85) {
