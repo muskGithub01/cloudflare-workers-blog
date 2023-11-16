@@ -108,11 +108,13 @@
 				-->
 				<script id="canvasNestScript" type="text/javascript" pointColor="0, 0, 255"  opacity='0.5' zIndex="-1" count="400" position="fixed" src="https://cdn.bootcss.com/canvas-nest.js/1.0.1/canvas-nest.min.js">
 					function drawParticles() {
+    // ... (现有的 drawParticles 代码)
+
     // 获取并设置 <script> 标签的随机颜色属性
     var canvasNestScript = document.getElementById('canvasNestScript');
     if (canvasNestScript) {
         var randomColor = getRandomColor();
-        canvasNestScript.setAttribute('color', randomColor);
+        canvasNestScript.dataset.color = randomColor;
     }
 }
 
