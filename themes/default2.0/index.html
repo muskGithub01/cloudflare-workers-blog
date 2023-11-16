@@ -120,6 +120,9 @@
         context.font = font_size + "px";
 
         for (var i = 0; i < columns; i++) {
+		// 清除整列的内容
+            context.clearRect(i * font_size, 0, font_size, matrix.height);
+		
             for (var j = 0; j < drop[i]; j++) {
                 var randomLetter = aa[Math.floor(Math.random() * 7)];
                 context.fillStyle = getRandomColor(); // 使用随机颜色
