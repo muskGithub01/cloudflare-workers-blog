@@ -107,67 +107,70 @@
 				<script type="text/javascript" pointColor="0, 0, 255" color="255, 0, 0" opacity='0.5' zIndex="2" count="200" position="fixed" src="dist/canvas-nest.js"></script>
 				<script type="text/javascript" pointColor="0, 0, 255" color="255, 0, 0" opacity='0.5' zIndex="2" count="200" position="fixed" src="dist/canvas-nest.js"></script>
 				-->
-				<script type="text/javascript" style="position: fixed; z-index: -1;">
-        // 存储粒子对象的数组
+				<script type="text/javascript" >
         var particles = [];
 
-        function setup() {
-            // 创建画布，大小为窗口大小
-            createCanvas(windowWidth, windowHeight);
-            // 设置帧率为60
-            frameRate(60);
+    function setup() {
+        // 创建画布，大小为窗口大小
+        let canvas = createCanvas(windowWidth, windowHeight);
+        // 设置帧率为60
+        frameRate(60);
 
-            // 初始化粒子数组
-            for (let i = 0; i < 120; i++) {
-                // 创建 Particle 对象并加入数组
-                particles.push(new Particle(random(width), random(height)));
+        // 初始化粒子数组
+        for (let i = 0; i < 120; i++) {
+            // 创建 Particle 对象并加入数组
+            particles.push(new Particle(random(width), random(height)));
+        }
+
+        // 在 setup 函数中设置 z-index
+        canvas.position(0, 0);
+        canvas.style('z-index', '9999'); // 设置足够高的 z-index 值
+    }
+
+    function draw() {
+        // 设置背景颜色
+        background(15, 15, 20);
+
+        // 遍历粒子数组，更新和显示每个粒子
+        for (let i = 0; i < particles.length; i++) {
+            particles[i].update();
+            particles[i].display();
+        }
+    }
+
+    // 定义 Particle 类
+    class Particle {
+        // 构造函数，用于初始化粒子的位置、速度和颜色
+        constructor(x, y) {
+            this.position = createVector(x, y);
+            this.velocity = createVector(random(-2, 2), random(-2, 2));
+            this.color = color(random(255), random(255), random(255));
+        }
+
+        // 更新粒子的位置
+        update() {
+            this.position.add(this.velocity);
+
+            // 边界检测，如果粒子超出画布边界，则重新设置位置
+            if (this.position.x > width || this.position.x < 0) {
+                this.position.x = random(width);
+            }
+
+            if (this.position.y > height || this.position.y < 0) {
+                this.position.y = random(height);
             }
         }
 
-        function draw() {
-            // 设置背景颜色
-            background(15, 15, 20);
-
-            // 遍历粒子数组，更新和显示每个粒子
-            for (let i = 0; i < particles.length; i++) {
-                particles[i].update();
-                particles[i].display();
-            }
+        // 显示粒子
+        display() {
+            // 不描边
+            noStroke();
+            // 使用粒子的颜色填充椭圆
+            fill(this.color.levels[0], this.color.levels[1], this.color.levels[2], 200);
+            // 在粒子位置处绘制椭圆
+            ellipse(this.position.x, this.position.y, 10, 10);
         }
-
-        // 定义 Particle 类
-        class Particle {
-            // 构造函数，用于初始化粒子的位置、速度和颜色
-            constructor(x, y) {
-                this.position = createVector(x, y);
-                this.velocity = createVector(random(-2, 2), random(-2, 2));
-                this.color = color(random(255), random(255), random(255));
-            }
-
-            // 更新粒子的位置
-            update() {
-                this.position.add(this.velocity);
-
-                // 边界检测，如果粒子超出画布边界，则重新设置位置
-                if (this.position.x > width || this.position.x < 0) {
-                    this.position.x = random(width);
-                }
-
-                if (this.position.y > height || this.position.y < 0) {
-                    this.position.y = random(height);
-                }
-            }
-
-            // 显示粒子
-            display() {
-                // 不描边
-                noStroke();
-                // 使用粒子的颜色填充椭圆
-                fill(this.color.levels[0], this.color.levels[1], this.color.levels[2], 200);
-                // 在粒子位置处绘制椭圆
-                ellipse(this.position.x, this.position.y, 10, 10);
-            }
-        }
+    }
     </script>
 				<canvas class="matrix" style="position: fixed; z-index: -2;"></canvas>
     <script>
