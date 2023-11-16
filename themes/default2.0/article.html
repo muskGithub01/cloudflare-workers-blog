@@ -124,9 +124,9 @@
 //            console.log(drop[i]);
         }
         function rain(){
-            context.fillStyle = "rgba(255, 255,255,0.05)";
+            context.fillStyle = "rgba(255, 255,255,1)";
             context.fillRect(0,0,matrix.width,matrix.height);
-	    var cr = 'rgb('+Math.floor(Math.random()*256)+','+ Math.floor(Math.random()*256)+','+Math.floor(Math.random()*256)+',0.05'+')';
+	    var cr = 'rgb('+Math.floor(Math.random()*256)+','+ Math.floor(Math.random()*256)+','+Math.floor(Math.random()*256)+')';
 	    context.fillStyle = cr; // 使用随机颜色
             context.font = font_size+"px";
             for(var i=0;i<columns;i++){
