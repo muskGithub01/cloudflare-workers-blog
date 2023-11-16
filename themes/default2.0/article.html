@@ -231,7 +231,7 @@
                     ratio = (item.max - dis) / item.max
                     // 画线
                     context.beginPath()
-                    context.lineWidth = ratio / 2
+                    context.lineWidth = ratio * 2
                     if(!timer){
                         timer = this.setInterval(() => {
                             rgba = 'rgba('+revColor(color_r)+','+revColor(color_g)+','+revColor(color_b)+',1)'
