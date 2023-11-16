@@ -235,7 +235,7 @@
                     if(!timer){
                         timer = this.setInterval(() => {
                             rgba = 'rgba('+revColor(color_r)+','+revColor(color_g)+','+revColor(color_b)+',1)'
-                            console.log(rgba)
+                            //console.log(rgba)
                         }, 1000/15);
                     }
                     
@@ -276,7 +276,7 @@
             requestAnimFrame(animate)       //用递归实现定时器的功效
             drawDots()
         }
-        console.log(canvas.getBoundingClientRect())
+        //console.log(canvas.getBoundingClientRect())
         animate()
       //
     </script>
