@@ -107,7 +107,7 @@
 				<script type="text/javascript" pointColor="0, 0, 255" color="255, 0, 0" opacity='0.5' zIndex="2" count="200" position="fixed" src="dist/canvas-nest.js"></script>
 				-->
 				<script type="text/javascript" pointColor="0, 0, 255" color="255, 0, 0" opacity='0.5' style="z-index: -1;" count="400" position="fixed" src="https://cdn.bootcss.com/canvas-nest.js/1.0.1/canvas-nest.min.js">
-				context.lineWidth = 0.5	;
+				context.lineWidth = 2	;
 				</script>
 				<canvas class="matrix" style="position: fixed; z-index: -2;"></canvas>
     <script>
@@ -126,7 +126,7 @@
         function rain(){
             context.fillStyle = "rgba(255, 255,255,0.05)";
             context.fillRect(0,0,matrix.width,matrix.height);
-            context.fillStyle = " #F38020";
+            context.fillStyle = " #36D07C";
             context.font = font_size+"px";
             for(var i=0;i<columns;i++){
                 context.fillText(aa[Math.floor(Math.random()*7)],i*font_size,drop[i]*font_size);
