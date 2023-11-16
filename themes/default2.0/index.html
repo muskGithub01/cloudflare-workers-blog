@@ -121,7 +121,7 @@ function rain() {
 
     for (var i = 0; i < columns; i++) {
         // 判断每列当前已经显示的字母数量是否在随机范围内
-        if (drop[i].length < Math.floor(Math.random() * (20 - 10 + 1)) + 10) {
+        if (drop[i].length < Math.floor(Math.random() * (60 - 30 + 1)) + 10) {
             for (var j = 0; j < drop[i].length; j++) {
                 var letterInfo = drop[i][j];
                 var randomLetter = letterInfo.letter;
