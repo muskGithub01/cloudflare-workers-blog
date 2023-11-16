@@ -101,48 +101,57 @@
 				</script>
 				<canvas class="matrix" style="position: fixed; z-index: -2;"></canvas>
 <script>
-    var matrix = document.querySelector(".matrix");
-    var context = matrix.getContext("2d");
-    var aa = ["a", "x", "s", "d", "w", "e", "f"];
-    matrix.width = innerWidth;
-    matrix.height = innerHeight;
-    var drop = [],
-        font_size = 24,
-        columns = matrix.width / font_size;
+   var matrix = document.querySelector(".matrix");
+var context = matrix.getContext("2d");
+var aa = ["a", "x", "s", "d", "w", "e", "f"];
+matrix.width = innerWidth;
+matrix.height = innerHeight;
+var drop = [],
+    font_size = 24,
+    columns = matrix.width / font_size;
+
+for (var i = 0; i < columns; i++) {
+    drop[i] = []; // 初始化每列的字母数组为空
+}
+
+function rain() {
+    context.fillStyle = "rgba(255, 255,255,1)";
+    context.fillRect(0, 0, matrix.width, matrix.height);
+    context.font = font_size + "px";
 
     for (var i = 0; i < columns; i++) {
-        drop[i] = 0; // 初始化每列的字母数量
-    }
+        // 判断每列当前已经显示的字母数量是否超过限制
+        if (drop[i].length < 20) {
+            for (var j = 0; j < drop[i].length; j++) {
+                var letterInfo = drop[i][j];
+                var randomLetter = letterInfo.letter;
+                var yPos = letterInfo.yPos;
 
-    function rain() {
-        context.fillStyle = "rgba(255, 255,255,1)";
-        context.fillRect(0, 0, matrix.width, matrix.height);
-        context.font = font_size + "px";
-
-        for (var i = 0; i < columns; i++) {
-	  if (drop[i] < 20) {
-            for (var j = 0; j < drop[i]; j++) {
-                var randomLetter = aa[Math.floor(Math.random() * 7)];
-                context.fillStyle = getRandomColor(); // 使用随机颜色
-                context.fillText(randomLetter, i * font_size, (drop[i] - j) * font_size);
+                context.fillStyle = getRandomColor();
+                context.fillText(randomLetter, i * font_size, yPos);
+                
+                // 更新字母位置
+                letterInfo.yPos += font_size;
             }
 
-            if (drop[i] * font_size > (matrix.height * 5/6) && Math.random() > 0.85) {
-                drop[i] = 0;
+            if (Math.random() > 0.85) {
+                drop[i].push({
+                    letter: aa[Math.floor(Math.random() * 7)],
+                    yPos: -font_size
+                });
             }
-
-            drop[i]++;
         }
     }
-    }
+}
 
-    function getRandomColor() {
-        return 'rgb(' + Math.floor(Math.random() * 256) + ',' + Math.floor(Math.random() * 256) + ',' + Math.floor(Math.random() * 256) + ')';
-    }
+function getRandomColor() {
+    return 'rgb(' + Math.floor(Math.random() * 256) + ',' + Math.floor(Math.random() * 256) + ',' + Math.floor(Math.random() * 256) + ')';
+}
 
-    setInterval(function () {
-        rain();
-    }, 200);
+setInterval(function () {
+    rain();
+}, 200);
+
 </script>
 
 
