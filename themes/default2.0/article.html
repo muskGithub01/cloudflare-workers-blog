@@ -106,73 +106,27 @@
 				<script type="text/javascript" pointColor="0, 0, 255" color="255, 0, 0" opacity='0.5' zIndex="2" count="200" position="fixed" src="dist/canvas-nest.js"></script>
 				<script type="text/javascript" pointColor="0, 0, 255" color="255, 0, 0" opacity='0.5' zIndex="2" count="200" position="fixed" src="dist/canvas-nest.js"></script>
 				-->
-				<script type="text/javascript" pointColor="0, 0, 255"  opacity='0.5' zIndex="-1" count="400" position="fixed" src="https://cdn.bootcss.com/canvas-nest.js/1.0.1/canvas-nest.min.js">
-</script>
-<script>
-    // 第一段代码开始
-    var canvas;
-    var maxParticles, particleBreakDistance, repelDist;
-    var particles = [];
-
-    function setup() {
-        canvas = createCanvas(windowWidth, windowHeight);
-
-        console.log("Canvas Size :" + width + "x" + height);
-        canvas.parent('mainCanvas');
-        frameRate(60);
-        strokeWeight(2);
-        stroke(255);
-
-        maxParticles = 120;
-        repelDist = max(width, height) / 8;
-        particleBreakDistance = max(width, height) / 40;
-        while (particles.length < maxParticles) {
-            obj = [createVector(random(width), random(height)), createVector(random(4) - 2, random(4) - 2)];
-            particles.push(obj);
-        }
+				<script id="canvasNestScript" type="text/javascript" pointColor="0, 0, 255"  opacity='0.5' zIndex="-1" count="400" position="fixed" src="https://cdn.bootcss.com/canvas-nest.js/1.0.1/canvas-nest.min.js">
+					function drawParticles() {
+    // 获取并设置 <script> 标签的随机颜色属性
+    var canvasNestScript = document.getElementById('canvasNestScript');
+    if (canvasNestScript) {
+        var randomColor = getRandomColor();
+        canvasNestScript.setAttribute('color', randomColor);
     }
+}
 
-    function drawParticles() {
-        // 第一段代码的 drawParticles 函数
-    }
+// 生成随机颜色值的函数
+function getRandomColor() {
+    var r = Math.floor(Math.random() * 256);
+    var g = Math.floor(Math.random() * 256);
+    var b = Math.floor(Math.random() * 256);
+    return r + ',' + g + ',' + b;
+}
 
-    function draw() {
-        // 第一段代码的 draw 函数
-    }
-    // 第一段代码结束
 
-    // 第二段代码的原有部分
-    var matrix = document.querySelector(".matrix");
-    var context = matrix.getContext("2d");
-    var aa = ["a", "x", "s", "d", "w", "e", "f"];
-    matrix.width = innerWidth;
-    matrix.height = innerHeight;
-    var font_size = 24;
-    var columns = matrix.width / font_size;
-    var matrixText = [];
-    var matrixPosition = [];
-
-    for (var i = 0; i < columns; i++) {
-        matrixText[i] = [];
-        matrixPosition[i] = Math.floor(Math.random() * 20) + 1;
-    }
-
-    function rain() {
-        // 第二段代码的 rain 函数
-    }
-
-    function getRandomColor() {
-        // 第二段代码的 getRandomColor 函数
-    }
-
-    setInterval(function () {
-        rain();
-    }, 200);
-    console.log(4 && 0);
-</script>
-
+				</script>
 				
-
 				<canvas class="matrix" style="position: fixed; z-index: -2;"></canvas>
     <script>
         var matrix = document.querySelector(".matrix");
