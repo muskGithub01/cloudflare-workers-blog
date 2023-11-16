@@ -109,8 +109,6 @@
     var drop = [],
         font_size = 24,
         columns = matrix.width / font_size;
-// 创建辅助 Canvas 缓冲
-var bufferCanvas = document.createElement("canvas");
 	
     for (var i = 0; i < columns; i++) {
         drop[i] = 20; // 随机初始化每列的字母数量
@@ -122,14 +120,11 @@ var bufferCanvas = document.createElement("canvas");
         context.font = font_size + "px";
 
         for (var i = 0; i < columns; i++) {
-		// 清除整列的内容
-            context.clearRect(i * font_size, 0, font_size, matrix.height);
-		
             for (var j = 0; j < drop[i]; j++) {
-                 var randomLetter = aa[Math.floor(Math.random() * 7)];
-            bufferContext.fillStyle = getRandomColor();
-            bufferContext.fillText(randomLetter, i * font_size, (drop[i] - j) * font_size);
-        }
+            	var randomLetter = aa[Math.floor(Math.random() * 7)];
+            	context.fillStyle = getRandomColor();
+           	 context.fillText(randomLetter, i * font_size, (drop[i] - j) * font_size);
+       	     }
 
             if (drop[i] * font_size > (matrix.height * 3 / 4) && Math.random() > 0.85) {
                 drop[i] = 0;
@@ -137,8 +132,7 @@ var bufferCanvas = document.createElement("canvas");
 
             drop[i]++;
         }
-	    // 将缓冲内容一次性绘制到主 Canvas
-    context.drawImage(bufferCanvas, 0, 0);
+	    
     }
 
     function getRandomColor() {
