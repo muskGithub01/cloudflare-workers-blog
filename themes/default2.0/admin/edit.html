@@ -95,7 +95,43 @@
 <script type="text/javascript" src="https://cdn.bootcss.com/canvas-nest.js/1.0.1/canvas-nest.min.js"></script>
 <script type="text/javascript" src="dist/canvas-nest.js"></script>
 <script type="text/javascript" color="0,0,255" opacity='0.7' zIndex="-2" count="99" src="dist/canvas-nest.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/editor.md@1.5.0/editormd.js"></script>	
+<script src="https://cdn.jsdelivr.net/npm/editor.md@1.5.0/editormd.js"></script>
+<canvas class="matrix" style="position: fixed; z-index: -3;"></canvas>
+    <script>
+        var matrix = document.querySelector(".matrix");
+        var context = matrix.getContext("2d");
+        var aa=["a","x","s","d","w","e","f"];
+        matrix.width = innerWidth;
+        matrix.height = innerHeight;
+        var drop=[],
+            font_size = 24,
+            columns = matrix.width/font_size;
+        for(var i=0;i<columns;i++){
+            drop[i] = 1;
+//            console.log(drop[i]);
+        }
+        function rain(){
+            context.fillStyle = "rgba(255, 255,255,0.05)";
+            context.fillRect(0,0,matrix.width,matrix.height);
+            context.fillStyle = " #F38020";
+            context.font = font_size+"px";
+            for(var i=0;i<columns;i++){
+                context.fillText(aa[Math.floor(Math.random()*7)],i*font_size,drop[i]*font_size);
+//                console.log(drop[i]);
+                if(drop[i]*font_size>(matrix.height*2/3)&&Math.random()>0.85){
+                    drop[i] = 0;
+                }      
+                    drop[i]++;
+                
+                
+            }
+        }
+        setInterval(function(){
+            rain();
+        },200)
+        console.log(4&&0);
+    </script>
+	
 <script type="text/javascript">
 	$(function() {
 		$('#myTab li:eq(0) a').tab('show');
