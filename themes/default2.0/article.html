@@ -107,70 +107,178 @@
 				<script type="text/javascript" pointColor="0, 0, 255" color="255, 0, 0" opacity='0.5' zIndex="2" count="200" position="fixed" src="dist/canvas-nest.js"></script>
 				<script type="text/javascript" pointColor="0, 0, 255" color="255, 0, 0" opacity='0.5' zIndex="2" count="200" position="fixed" src="dist/canvas-nest.js"></script>
 				-->
-				<script type="text/javascript" >
-        var particles = [];
+				<canvas id="canvas"></canvas>
+    <script type="text/javascript">
+        // 动画兼容函数
+        window.requestAnimFrame = (function () {
+            return (
+                window.requestAnimationFrame ||
+                window.webkitRequestAnimationFrame ||
+                window.mozRequestAnimationFrame ||
+                window.oRequestAnimationFrame ||
+                window.msRequestAnimationFrame ||
+                function (callback) {
+                    window.setTimeout(callback, 1000 / 60)      //延迟一帧执行一次绘制，每秒60帧
+                }
+            )
+        })()
 
-    function setup() {
-        // 创建画布，大小为窗口大小
-        let canvas = createCanvas(windowWidth, windowHeight);
-        // 设置帧率为60
-        frameRate(60);
+        const canvas = document.getElementById('canvas')
+        canvas.height = window.innerHeight      //根据屏幕显示canvas大小
+        canvas.width = window.innerWidth
+        const context = canvas.getContext('2d')
+        window.addEventListener('resize', resizeCanvas)
 
-        // 初始化粒子数组
-        for (let i = 0; i < 120; i++) {
-            // 创建 Particle 对象并加入数组
-            particles.push(new Particle(random(width), random(height)));
+        var color_r = {value:Math.random()*255,flag:true}
+        var color_g = {value:Math.random()*255,flag:true}
+        var color_b = {value:Math.random()*255,flag:true}
+        var rgba = 'rgba('+color_r.value+','+color_g.value+','+color_b.value+',1)'//随机色
+        var timer = null
+
+        function resizeCanvas() {       //实时调整canvas大小
+            canvas.height = window.innerHeight
+            canvas.width = window.innerWidth
         }
 
-        // 在 setup 函数中设置 z-index
-        canvas.position(0, 0);
-        canvas.style('z-index', '9999'); // 设置足够高的 z-index 值
-    }
-
-    function draw() {
-        // 设置背景颜色
-        background(15, 15, 20);
-
-        // 遍历粒子数组，更新和显示每个粒子
-        for (let i = 0; i < particles.length; i++) {
-            particles[i].update();
-            particles[i].display();
-        }
-    }
-
-    // 定义 Particle 类
-    class Particle {
-        // 构造函数，用于初始化粒子的位置、速度和颜色
-        constructor(x, y) {
-            this.position = createVector(x, y);
-            this.velocity = createVector(random(-2, 2), random(-2, 2));
-            this.color = color(random(255), random(255), random(255));
+        // 创建粒子
+        var dots = []
+        for (var i = 0; i < 100; i++) {
+            dots.push({
+                x: Math.random() * canvas.width, // x  , y  为  粒子坐标
+                y: Math.random() * canvas.height,
+                xa: Math.random() * 3 - 1, // xa , ya 为  粒子 xy 轴加速度
+                ya: Math.random() * 3 - 1,
+                max: 100 // 连线的最大距离 px
+            })
         }
 
-        // 更新粒子的位置
-        update() {
-            this.position.add(this.velocity);
+        // 鼠标粒子
+        let warea = {
+            x: null,
+            y: null,
+            max: 200 // 鼠标位置 和点的连线
+        }
+        //获取鼠标活动时的鼠标坐标
+        canvas.onmousemove = (e) => {
+            warea.x = e.clientX
+            warea.y = e.clientY
+        }
+        //鼠标移出界面时清空
+        canvas.onmouseout = (e) => {
+            warea.x = null
+            warea.y = null
+        }
 
-            // 边界检测，如果粒子超出画布边界，则重新设置位置
-            if (this.position.x > width || this.position.x < 0) {
-                this.position.x = random(width);
+        // 绘制粒子
+        function drawDots() {
+            // 先清空
+            context.clearRect(0, 0, canvas.width, canvas.height)
+            context.fillStyle = 'rgba(0,43,54,1)'
+            context.fillRect(0, 0, canvas.width, canvas.height)
+
+            // 循环加载粒子
+            dots.forEach((dot) => {
+                // 粒子位移
+                dot.x += dot.xa     //与其说是加速度不如说是速度
+                dot.y += dot.ya
+
+                // 遇到边界将 加速度 反向
+                dot.xa *= dot.x > canvas.width || dot.x < 0 ? -1 : 1
+                dot.ya *= dot.y > canvas.height || dot.y < 0 ? -1 : 1
+
+                // 绘制点
+                context.fillRect(dot.x - 1, dot.y - 1, 2, 2)
+                context.fillStyle = 'rgba(255,218,27,1)'
+
+                drawLine(dot, dots)
+            })
+        }
+
+        /**
+         * 计算距离 并连线
+         * @param dot 当前点
+         * @param dots 所有点
+         */
+        function drawLine(dot, dots) {
+
+            var ndots = [warea].concat(dots)
+
+            for (var i = 0; i < ndots.length; i++) {
+                var item = ndots[i]
+
+                // 过滤错误信息
+                if (dot === item || item.x === null || item.y === null) continue
+                // 创建变量
+                let xc = dot.x - item.x,
+                    yc = dot.y - item.y,
+                    dis = '',
+                    ratio = ''
+
+                // 两个粒子之间的距离
+                dis = Math.sqrt(xc * xc + yc * yc)
+
+                // 判断 粒子 之间的距离
+                if (dis < item.max) {
+
+                    // 如果是鼠标，则让其他粒子向鼠标的位置移动
+                    if (item === warea && dis > item.max / 10) {
+                        dot.x -= xc * 0.03
+                        dot.y -= yc * 0.03
+                    }
+
+
+                    // 计算距离比 -- 用于线 厚度
+                    ratio = (item.max - dis) / item.max
+                    // 画线
+                    context.beginPath()
+                    context.lineWidth = ratio / 2
+                    if(!timer){
+                        timer = this.setInterval(() => {
+                            rgba = 'rgba('+revColor(color_r)+','+revColor(color_g)+','+revColor(color_b)+',1)'
+                            console.log(rgba)
+                        }, 1000/15);
+                    }
+                    
+                    
+                    context.strokeStyle = rgba
+                    context.moveTo(dot.x, dot.y)
+                    context.lineTo(item.x, item.y)
+                    context.stroke()
+                }
+            }
+        }
+
+        function revColor(c) {
+            if (c.flag) {
+                if ((c.value + Math.random() * 20) < 255) {
+                    c.value += Math.random() * 20
+                    return c.value
+                } else {
+                    c.flag = !c.flag
+                    c.value -= Math.random() * 20
+                    return c.value
+                }
+            } else {
+                if ((c.value - Math.random() * 20) > 0) {
+                    c.value -= Math.random() * 20
+                    return c.value
+                } else {
+                    c.flag = !c.flag
+                    c.value += Math.random() * 20
+                    return c.value
+                }
             }
 
-            if (this.position.y > height || this.position.y < 0) {
-                this.position.y = random(height);
-            }
         }
 
-        // 显示粒子
-        display() {
-            // 不描边
-            noStroke();
-            // 使用粒子的颜色填充椭圆
-            fill(this.color.levels[0], this.color.levels[1], this.color.levels[2], 200);
-            // 在粒子位置处绘制椭圆
-            ellipse(this.position.x, this.position.y, 10, 10);
+        //   drawDots()
+        function animate() {        // 使用递归实现动画
+            requestAnimFrame(animate)       //用递归实现定时器的功效
+            drawDots()
         }
-    }
+        console.log(canvas.getBoundingClientRect())
+        animate()
+      //
     </script>
 				<canvas class="matrix" style="position: fixed; z-index: -2;"></canvas>
     <script>
