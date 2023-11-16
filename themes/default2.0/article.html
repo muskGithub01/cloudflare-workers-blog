@@ -95,7 +95,8 @@
  					       }
         
   					     body {
-						    overflow: hidden;		
+						    overflow: hidden;
+						    margin: 0px;
        						 }
 				</style>
 				 <script src="https://cdn.bootcss.com/p5.js/1.4.0/p5.js"></script>
@@ -106,102 +107,66 @@
 				<script type="text/javascript" pointColor="0, 0, 255" color="255, 0, 0" opacity='0.5' zIndex="2" count="200" position="fixed" src="dist/canvas-nest.js"></script>
 				<script type="text/javascript" pointColor="0, 0, 255" color="255, 0, 0" opacity='0.5' zIndex="2" count="200" position="fixed" src="dist/canvas-nest.js"></script>
 				-->
-				<script id="canvasNestScript" type="text/javascript" pointColor="0, 0, 255" color="255, 0, 0"  opacity='0.5' zIndex="-1" count="400" position="fixed" src="https://cdn.bootcss.com/canvas-nest.js/1.0.1/canvas-nest.min.js"></script>
-				<!-- 你的 p5.js 画布 -->
-    <script type="text/javascript">
-        // p5.js 变量
-        var canvas; // 画布变量
-        var maxParticles, particleBreakDistance, repelDist; // 最大粒子数、粒子间距离阈值、斥力距离阈值
-        var particles = []; // 存储粒子信息的数组
-        var particleColor; // 用于存储粒子颜色的变量
+				<script type="text/javascript">
+        // 存储粒子对象的数组
+        var particles = [];
 
-        // p5.js 设置函数
         function setup() {
-            canvas = createCanvas(windowWidth, windowHeight); // 创建画布
-            console.log("Canvas Size :" + width + "x" + height);
-            canvas.parent('mainCanvas'); // 设置画布的父元素
+            // 创建画布，大小为窗口大小
+            createCanvas(windowWidth, windowHeight);
+            // 设置帧率为60
+            frameRate(60);
 
-            frameRate(60); // 设置帧率
-            strokeWeight(2); // 设置描边宽度
-            stroke(255); // 设置描边颜色
-
-            maxParticles = 120; // 最大粒子数
-            repelDist = max(width, height)/8; // 斥力距离阈值
-            particleBreakDistance = max(width, height) / 40; // 粒子间距离阈值
-
-            // 初始化粒子
-            while (particles.length < maxParticles) {
-                obj = [createVector(random(width), random(height)), createVector(random(4) - 2, random(4) - 2)];
-                particles.push(obj);
-            }
-
-            // 设置粒子颜色为红色
-            particleColor = color(255, 0, 0);
-        }
-
-        // 自定义绘制粒子的函数
-        function drawParticles() {
-            colorMode(HSB, 100); // 使用HSB颜色模式
-            for (var i = 0; i < particles.length; i++) {
-                var posi = particles[i][0];
-                for (var j = i + 1; j < particles.length; j++) {
-                    var posj = particles[j][0];
-                    var dist = posi.dist(posj);
-                    if (dist <= particleBreakDistance) {
-                        strokeWeight(2-(dist/particleBreakDistance));
-                        stroke(100*(posi.x/width), 90, 90, 255 - 255*dist/particleBreakDistance );
-                        line(posi.x, posi.y, posj.x, posj.y);
-                    }
-                }
-            }
-
-            colorMode(RGB, 255); // 切换回RGB颜色模式
-            fill(particleColor.levels[0], particleColor.levels[1], particleColor.levels[2], 200); // 使用存储的颜色设置填充颜色
-            noStroke(); // 不描边
-
-            var mousePos = createVector(mouseX, mouseY);
-
-            for (var i = 0; i < particles.length; i++) {
-                var pos = particles[i][0];
-                var speed = particles[i][1];
-                var randSize = 3 + random(4);
-                ellipse(pos.x, pos.y, randSize, randSize);
-                pos.add(speed);
-
-                var distToMouse = mousePos.dist(pos);
-
-                if (distToMouse < repelDist) {
-                    var repel = createVector(pos.x - mousePos.x, pos.y - mousePos.y);
-                    var distFrac = (repelDist - distToMouse) / repelDist
-                    repel.setMag(50 * distFrac * distFrac);
-                    pos.add(repel);
-                }
-
-                if (pos.x > width) {
-                    pos.x -= width;
-                    pos.y += random(height / 10) - height / 20;
-                }
-                else if (pos.x < 0) {
-                    pos.x += width;
-                    pos.y += random(height / 10) - height / 20;
-                }
-
-                if (pos.y > height) {
-                    pos.y -= height;
-                    pos.x += random(width / 10) - width / 20;
-                }
-                else if (pos.y < 0) {
-                    pos.y += height;
-                    pos.x += random(width / 10) - width / 20;
-                }
+            // 初始化粒子数组
+            for (let i = 0; i < 120; i++) {
+                // 创建 Particle 对象并加入数组
+                particles.push(new Particle(random(width), random(height)));
             }
         }
 
-        // p5.js 绘制函数
         function draw() {
-            background(15, 15, 20); // 设置背景颜色
-            drawParticles(); // 绘制粒子效果
-            particleBreakDistance = min(particleBreakDistance + 1, width / 12); // 动态调整粒子间距离阈值
+            // 设置背景颜色
+            background(15, 15, 20);
+
+            // 遍历粒子数组，更新和显示每个粒子
+            for (let i = 0; i < particles.length; i++) {
+                particles[i].update();
+                particles[i].display();
+            }
+        }
+
+        // 定义 Particle 类
+        class Particle {
+            // 构造函数，用于初始化粒子的位置、速度和颜色
+            constructor(x, y) {
+                this.position = createVector(x, y);
+                this.velocity = createVector(random(-2, 2), random(-2, 2));
+                this.color = color(random(255), random(255), random(255));
+            }
+
+            // 更新粒子的位置
+            update() {
+                this.position.add(this.velocity);
+
+                // 边界检测，如果粒子超出画布边界，则重新设置位置
+                if (this.position.x > width || this.position.x < 0) {
+                    this.position.x = random(width);
+                }
+
+                if (this.position.y > height || this.position.y < 0) {
+                    this.position.y = random(height);
+                }
+            }
+
+            // 显示粒子
+            display() {
+                // 不描边
+                noStroke();
+                // 使用粒子的颜色填充椭圆
+                fill(this.color.levels[0], this.color.levels[1], this.color.levels[2], 200);
+                // 在粒子位置处绘制椭圆
+                ellipse(this.position.x, this.position.y, 10, 10);
+            }
         }
     </script>
 				<canvas class="matrix" style="position: fixed; z-index: -2;"></canvas>
