@@ -106,14 +106,14 @@
 				<script type="text/javascript" pointColor="0, 0, 255" color="255, 0, 0" opacity='0.5' zIndex="2" count="200" position="fixed" src="dist/canvas-nest.js"></script>
 				<script type="text/javascript" pointColor="0, 0, 255" color="255, 0, 0" opacity='0.5' zIndex="2" count="200" position="fixed" src="dist/canvas-nest.js"></script>
 				-->
-				<script type="text/javascript" pointColor="0, 0, 255" color="255, 0, 0" opacity='0.5' style="z-index: 1;" count="200" position="fixed" src="https://cdn.bootcss.com/canvas-nest.js/1.0.1/canvas-nest.min.js"></script>
-				<canvas class="matrix" style="position: fixed; z-index: 2;"></canvas>
+				<script type="text/javascript" pointColor="0, 0, 255" color="255, 0, 0" opacity='0.5' style="z-index: 2;" count="200" position="fixed" src="https://cdn.bootcss.com/canvas-nest.js/1.0.1/canvas-nest.min.js"></script>
+				<canvas class="matrix" style="position: fixed; z-index: 1;"></canvas>
     <script>
         var matrix = document.querySelector(".matrix");
         var context = matrix.getContext("2d");
         var aa=["a","x","s","d","w","e","f"];
         matrix.width = innerWidth;
-        matrix.height = innerHeight/2;
+        matrix.height = innerHeight;
         var drop=[],
             font_size = 16,
             columns = matrix.width/font_size;
