@@ -109,9 +109,9 @@
     var drop = [],
         font_size = 24,
         columns = matrix.width / font_size;
-	
+
     for (var i = 0; i < columns; i++) {
-        drop[i] = 20; // 随机初始化每列的字母数量
+        drop[i] = Math.floor(Math.random() * 10) + 1; // 随机初始化每列的字母数量
     }
 
     function rain() {
@@ -121,18 +121,17 @@
 
         for (var i = 0; i < columns; i++) {
             for (var j = 0; j < drop[i]; j++) {
-            	var randomLetter = aa[Math.floor(Math.random() * 7)];
-            	context.fillStyle = getRandomColor();
-           	 context.fillText(randomLetter, i * font_size, (drop[i] - j) * font_size);
-       	     }
+                var randomLetter = aa[Math.floor(Math.random() * 7)];
+                context.fillStyle = getRandomColor(); // 使用随机颜色
+                context.fillText(randomLetter, i * font_size, (drop[i] - j) * font_size);
+            }
 
-            if (drop[i] * font_size > (matrix.height * 3 / 4) && Math.random() > 0.85) {
+            if (drop[i] * font_size > (matrix.height * 2 / 3) && Math.random() > 0.85) {
                 drop[i] = 0;
             }
 
             drop[i]++;
         }
-	    
     }
 
     function getRandomColor() {
@@ -143,6 +142,7 @@
         rain();
     }, 200);
 </script>
+
 
 				
 				<div id="page" class="site">
