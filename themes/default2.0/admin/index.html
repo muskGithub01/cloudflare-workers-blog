@@ -11,7 +11,9 @@
     <link rel="stylesheet" href="https://cdn.staticfile.org/bootstrap-select/1.9.4/css/bootstrap-select.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
     
-	<script src="https://cdn.bootcss.com/p5.js/1.4.0/p5.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script src="https://cdn.bootcss.com/p5.js/1.4.0/p5.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdn.staticfile.org/jquery/2.2.4/jquery.min.js"></script>
     <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
@@ -22,7 +24,7 @@
 		}
 		canvas {
            	   position: fixed;
-            	   z-index: 9999;
+            	   z-index: -1;
        		 }
 	</style>
 	
@@ -39,16 +41,10 @@
             frameRate(60);
 
             // 初始化粒子数组
-            for (let i = 0; i < 120; i++) {
+            for (let i = 0; i < 200; i++) {
                 // 创建 Particle 对象并加入数组
                 particles.push(new Particle(random(width), random(height)));
             }
-
-            // 在这里设置 canvas-nest.js 的参数
-            CanvasNest({
-                color: '255,0,0', // 线条颜色，这里设置为红色
-                opacity: 0.5 // 线条透明度
-            });
         }
 
         function draw() {
@@ -85,14 +81,28 @@
                 }
             }
 
-            // 显示粒子
+            // 显示粒子和连接线
             display() {
                 // 不描边
                 noStroke();
                 // 使用粒子的颜色填充椭圆
                 fill(this.color.levels[0], this.color.levels[1], this.color.levels[2], 200);
-                // 在粒子位置处绘制椭圆
-                ellipse(this.position.x, this.position.y, 10, 10);
+                // 在粒子位置处绘制更小的椭圆
+                ellipse(this.position.x, this.position.y, 6, 6);
+
+                // 遍历粒子数组
+                for (let i = 0; i < particles.length; i++) {
+                    // 计算粒子之间的距离
+                    let d = dist(this.position.x, this.position.y, particles[i].position.x, particles[i].position.y);
+
+                    // 如果粒子之间的距离小于一定值，绘制连接线
+                    if (d < 100 && this !== particles[i]) {
+                        // 使用粒子的颜色描边线条
+                        stroke(this.color.levels[0], this.color.levels[1], this.color.levels[2], 50);
+                        // 绘制线条
+                        line(this.position.x, this.position.y, particles[i].position.x, particles[i].position.y);
+                    }
+                }
             }
         }
     </script>
