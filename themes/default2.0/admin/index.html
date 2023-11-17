@@ -11,111 +11,21 @@
     <link rel="stylesheet" href="https://cdn.staticfile.org/bootstrap-select/1.9.4/css/bootstrap-select.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
     
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <script src="https://cdn.bootcss.com/p5.js/1.4.0/p5.js"></script>
-    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
     <script src="https://cdn.staticfile.org/jquery/2.2.4/jquery.min.js"></script>
     <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/i18n/defaults-zh_CN.min.js"></script>
 	<style>
 		.bootstrap-select>.dropdown-toggle {
-		z-index:1;
+		z-index:auto;
 		}
-		canvas {
-           	   
-            	   z-index: -1;
-       		 }
+		
 	</style>
 	
 </head>
 <body>
-	 <canvas id="canvas"></canvas>
-<script>
-        // 存储粒子对象的数组
-        var particles = [];
-
-        function setup() {
-            // 创建画布，大小为窗口大小
-           // createCanvas(windowWidth, windowHeight);
-		const canvas = document.getElementById('canvas')
-        canvas.height = window.innerHeight      //根据屏幕显示canvas大小
-        canvas.width = window.innerWidth
-        const context = canvas.getContext('2d')
-        window.addEventListener('resize', resizeCanvas)
-		function resizeCanvas() {       //实时调整canvas大小
-            canvas.height = window.innerHeight
-            canvas.width = window.innerWidth
-        }
-            // 设置帧率为60
-            frameRate(60);
-
-            // 初始化粒子数组
-            for (let i = 0; i < 200; i++) {
-                // 创建 Particle 对象并加入数组
-                particles.push(new Particle(random(width), random(height)));
-            }
-        }
-
-        function draw() {
-            // 设置背景颜色
-            background(15, 15, 20);
-
-            // 遍历粒子数组，更新和显示每个粒子
-            for (let i = 0; i < particles.length; i++) {
-                particles[i].update();
-                particles[i].display();
-            }
-        }
-
-        // 定义 Particle 类
-        class Particle {
-            // 构造函数，用于初始化粒子的位置、速度和颜色
-            constructor(x, y) {
-                this.position = createVector(x, y);
-                this.velocity = createVector(random(-2, 2), random(-2, 2));
-                this.color = color(random(255), random(255), random(255));
-            }
-
-            // 更新粒子的位置
-            update() {
-                this.position.add(this.velocity);
-
-                // 边界检测，如果粒子超出画布边界，则重新设置位置
-                if (this.position.x > width || this.position.x < 0) {
-                    this.position.x = random(width);
-                }
-
-                if (this.position.y > height || this.position.y < 0) {
-                    this.position.y = random(height);
-                }
-            }
-
-            // 显示粒子和连接线
-            display() {
-                // 不描边
-                noStroke();
-                // 使用粒子的颜色填充椭圆
-                fill(this.color.levels[0], this.color.levels[1], this.color.levels[2], 200);
-                // 在粒子位置处绘制更小的椭圆
-                ellipse(this.position.x, this.position.y, 6, 6);
-
-                // 遍历粒子数组
-                for (let i = 0; i < particles.length; i++) {
-                    // 计算粒子之间的距离
-                    let d = dist(this.position.x, this.position.y, particles[i].position.x, particles[i].position.y);
-
-                    // 如果粒子之间的距离小于一定值，绘制连接线
-                    if (d < 100 && this !== particles[i]) {
-                        // 使用粒子的颜色描边线条
-                        stroke(this.color.levels[0], this.color.levels[1], this.color.levels[2], 50);
-                        // 绘制线条
-                        line(this.position.x, this.position.y, particles[i].position.x, particles[i].position.y);
-                    }
-                }
-            }
-        }
-    </script>
+	 
 <nav class="navbar navbar-default " role="navigation">
 	<div class="container-fluid">
 
@@ -256,9 +166,9 @@
 		</div>
 	</div>	
 </div>
-<!-- <script type="text/javascript" src="https://cdn.bootcss.com/canvas-nest.js/1.0.1/canvas-nest.min.js"></script>
-<script type="text/javascript" src="dist/canvas-nest.js"></script>
-<script type="text/javascript" color="0,0,255" opacity='0.7' zIndex="-2" count="99" src="dist/canvas-nest.js"></script> -->
+ <script type="text/javascript" color="255,0,0" src="https://cdn.bootcss.com/canvas-nest.js/1.0.1/canvas-nest.min.js"></script>
+<script type="text/javascript" color="255,0,0" src="dist/canvas-nest.js"></script>
+<script type="text/javascript" color="255,0,0" opacity='0.7' zIndex="-2" count="99" src="dist/canvas-nest.js"></script> 
 <script src="https://cdn.jsdelivr.net/npm/editor.md@1.5.0/editormd.js"></script>
 <script type="text/javascript">
 	$(function() {
