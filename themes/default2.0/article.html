@@ -184,7 +184,7 @@
         function drawDots() {
             // 先清空
             context.clearRect(0, 0, canvas.width, canvas.height)
-            context.fillStyle = 'rgba(0,43,54,1)'
+            context.fillStyle = 'transparent'
             context.fillRect(0, 0, canvas.width, canvas.height)
 
             // 循环加载粒子
@@ -310,7 +310,7 @@
 
         function rain() {
             // context1.fillStyle = "rgba(255,255,255,1)";
-            context.fillStyle = 'rgba(0,43,54,1)';
+            context.fillStyle = 'transparent';
             context1.fillRect(0, 0, matrix.width, matrix.height);
             context1.font = font_size + "px";
 
