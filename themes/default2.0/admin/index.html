@@ -30,13 +30,23 @@
 	
 </head>
 <body>
+	 <canvas id="canvas"></canvas>
 <script>
         // 存储粒子对象的数组
         var particles = [];
 
         function setup() {
             // 创建画布，大小为窗口大小
-            createCanvas(windowWidth, windowHeight);
+           // createCanvas(windowWidth, windowHeight);
+		const canvas = document.getElementById('canvas')
+        canvas.height = window.innerHeight      //根据屏幕显示canvas大小
+        canvas.width = window.innerWidth
+        const context = canvas.getContext('2d')
+        window.addEventListener('resize', resizeCanvas)
+		function resizeCanvas() {       //实时调整canvas大小
+            canvas.height = window.innerHeight
+            canvas.width = window.innerWidth
+        }
             // 设置帧率为60
             frameRate(60);
 
