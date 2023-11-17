@@ -98,6 +98,17 @@
 						    overflow: hidden;
 						    margin: 0px;
        						 }
+					 canvas {
+          					  position: fixed;
+       						 }
+
+      					  #canvas {
+          						  z-index: -1;
+       						 }
+
+        				.matrix {
+          					  z-index: -2;
+       						 }
 				</style>
 				 <script src="https://cdn.bootcss.com/p5.js/1.4.0/p5.js"></script>
 			</head>
@@ -107,7 +118,7 @@
 				<script type="text/javascript" pointColor="0, 0, 255" color="255, 0, 0" opacity='0.5' zIndex="2" count="200" position="fixed" src="dist/canvas-nest.js"></script>
 				<script type="text/javascript" pointColor="0, 0, 255" color="255, 0, 0" opacity='0.5' zIndex="2" count="200" position="fixed" src="dist/canvas-nest.js"></script>
 				-->
-				<canvas id="canvas" class="matrix" style="position: fixed; z-index:-1;"></canvas>
+				<canvas id="canvas" style="position: fixed; z-index:-1;"></canvas>
     <script type="text/javascript">
         // 动画兼容函数
         window.requestAnimFrame = (function () {
@@ -266,19 +277,21 @@
                     c.flag = !c.flag
                     c.value += Math.random() * 20
                     return c.value
-                }
-            }
+          		      }
+      		      }
 
-        }
+     		   }
 
-        //   drawDots()
-        function animate() {        // 使用递归实现动画
-            requestAnimFrame(animate)       //用递归实现定时器的功效
-            drawDots()
-        }
-        //console.log(canvas.getBoundingClientRect())
-        animate()
+      		  //   drawDots()
+     		   function animate() {        // 使用递归实现动画
+       		     requestAnimFrame(animate)       //用递归实现定时器的功效
+       		     drawDots()
+      		  }
+      		  //console.log(canvas.getBoundingClientRect())
+      		  animate()
    	 </script>
+	
+	<canvas class="matrix" style="position: fixed; z-index: -2;"></canvas>			
 	<script>
         var matrix = document.querySelector(".matrix");
         var context1 = matrix.getContext("2d");
